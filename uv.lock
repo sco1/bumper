@@ -78,6 +78,15 @@ wheels = [
 ]
 
 [[package]]
+name = "cogapp"
+version = "3.4.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b1/d7/9e40d9d957ab1042046b3f6959528f47f9c6e8cb0f2031a3ba69809ed6e9/cogapp-3.4.1.tar.gz", hash = "sha256:a806d5db9e318a1a2d3fce988008179168e7db13e5e55b19b79763f9bb9d2982", size = 53776 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/92/4e/bd3bd0641fb05ba3ab6e16ffb9132ef71ffdeb0392ce21ec6670ff66eaf6/cogapp-3.4.1-py3-none-any.whl", hash = "sha256:1daba7b6c8bb23b733c64833de7aa3a42476c05afba19cff937e1b522216859d", size = 27328 },
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -461,11 +470,13 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "packaging" },
+    { name = "typer-slim" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "black" },
+    { name = "cogapp" },
     { name = "flake8" },
     { name = "flake8-annotations" },
     { name = "isort" },
@@ -481,11 +492,15 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "packaging", specifier = "~=24.1" }]
+requires-dist = [
+    { name = "packaging", specifier = "~=24.1" },
+    { name = "typer-slim", specifier = "~=0.12" },
+]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = "~=24.10" },
+    { name = "cogapp", specifier = "~=3.4" },
     { name = "flake8", specifier = "~=7.1" },
     { name = "flake8-annotations", specifier = "~=3.1" },
     { name = "isort", specifier = "~=5.13" },
@@ -541,6 +556,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/31/23/752b7bc25013d2958df6adac2bce983b0984930444f2f23926cc325e2848/tox_uv-1.13.0.tar.gz", hash = "sha256:fb087b8b4ff779c72b48fc72ea1995387bb1c0dfb37910c20e46cef8b5f98c15", size = 15643 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/40/93/1b0b0c27177f4816594683cd4e008e07137756f5b8ba55483c30789bf08c/tox_uv-1.13.0-py3-none-any.whl", hash = "sha256:1037e4abad15a3b708b5970ed7a17a0765d7249b641a92b155bc3343b8b0145b", size = 13383 },
+]
+
+[[package]]
+name = "typer-slim"
+version = "0.12.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d0/4d/d79c0dd7f8df554fb6810528a61430e7e74de76fd83f03db1bcb25906678/typer_slim-0.12.5.tar.gz", hash = "sha256:c8e3fcf93cc7dd584036df8755d2e2363f85f8a4dd028c7911eed3f00cf0ebb1", size = 99015 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/d4/ced1f8074819b43804a0a5015f33bae422330e8d38b1992be91fa947190c/typer_slim-0.12.5-py3-none-any.whl", hash = "sha256:9a994f721b828783dbf144e17461b1c720bb4598e0d5eff7c1b3f08ee58cb062", size = 47110 },
 ]
 
 [[package]]

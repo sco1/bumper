@@ -80,3 +80,32 @@ def parse_config(cfg_path: Path) -> PARSED_T:
     files = [BumperFile.from_toml(**f) for f in loaded["tool"]["bumper"]["files"]]
 
     return current_version, files
+
+
+class ExistingConfigError(Exception): ...  # noqa: D101
+
+
+STARTER_CONFIG = """\
+[tool.bumper]
+current_version = "0.1.0"
+
+[[tool.bumper.files]]
+file = "./pyproject.toml"
+search = 'version = "{current_version}"'
+"""
+CD = Path()
+
+
+def write_default_config(ignore_existing: bool = False, root_dir: Path = CD) -> None:
+    """
+    Write a starter `.bumper.toml` configuration to the specified root directory.
+
+    If `ignore_existing` is `True`, any existing `.bumper.toml` file will be overwritten; this
+    action is not reversible. Otherwise, an exception will be raised.
+    """
+    cfg_path = root_dir / ".bumper.toml"
+    if not ignore_existing:
+        if cfg_path.exists():
+            raise ExistingConfigError(f"Configuration file already exists: '{cfg_path.name}'")
+
+    cfg_path.write_text(STARTER_CONFIG)

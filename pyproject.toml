@@ -25,6 +25,7 @@ classifiers = [
 requires-python = ">=3.11"
 dependencies = [
     "packaging~=24.1",
+    "typer-slim~=0.12",
 ]
 
 [project.urls]
@@ -35,11 +36,12 @@ Issues = "https://github.com/sco1/bumper/issues"
 Changelog = "https://github.com/sco1/bumper/blob/main/CHANGELOG.md"
 
 [project.scripts]
-bumper = "bumper.cli:main"
+bumper = "bumper.cli:bumper_cli"
 
 [tool.uv]
 dev-dependencies = [
     "black~=24.10",
+    "cogapp~=3.4",
     "flake8~=7.1",
     "flake8-annotations~=3.1",
     "isort~=5.13",
