@@ -1,4 +1,4 @@
-def main() -> None:
+def main() -> None:  # noqa: D103
     raise NotImplementedError
 
 
