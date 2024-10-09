@@ -1,21 +1,21 @@
 import typing as t
-from enum import StrEnum
 
 import typer
 
 from bumper import CONFIG_PRIORITY
-from bumper.config import BumperConfigError, ExistingConfigError, parse_config, write_default_config
+from bumper.bump import BumpType, bump_ver
+from bumper.config import (
+    BumperConfigError,
+    BumperFile,
+    ExistingConfigError,
+    parse_config,
+    write_default_config,
+)
 
 bumper_cli = typer.Typer(add_completion=False)
 
 
 class ConfigNotFoundError(Exception): ...  # noqa: D101
-
-
-class BumpType(StrEnum):  # noqa: D101
-    MAJOR = "major"
-    MINOR = "minor"
-    PATCH = "patch"
 
 
 def _abort_with_message(message: str, end: str = "\n") -> t.Never:
@@ -24,7 +24,7 @@ def _abort_with_message(message: str, end: str = "\n") -> t.Never:
 
 
 @bumper_cli.command(name="bump")
-def bump_ver(
+def bump_ver_cmd(
     bump_by: BumpType,
     dry_run: bool = typer.Option(False, help="Preview the requested diff."),
 ) -> None:
@@ -45,7 +45,9 @@ def bump_ver(
     except BumperConfigError as e:
         _abort_with_message(str(e))
 
-    raise NotImplementedError
+    # Add in the bump configuration so it gets updated as well
+    files.append(BumperFile(file=cfg_path, search='current_version = "{current_version}"'))
+    bump_ver(current_version=current_version, files=files, bump_type=bump_by, dry_run=dry_run)
 
 
 @bumper_cli.command()

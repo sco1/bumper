@@ -13,6 +13,7 @@ Heavily inspired by [`bump2version`](https://github.com/c4urself/bump2version) a
 ### Required Fields
 #### `tool.bumper`
 * `current_version` - The current software version. This is automatically incremented when bumping.
+  * **NOTE:** Only SemVer is supported
 
 #### `tool.bumper.files`
 * `file` - Path to target file relative to the repository root
