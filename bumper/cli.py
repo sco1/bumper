@@ -52,7 +52,12 @@ def bump_ver_cmd(
 
 @bumper_cli.command()
 def init(ignore_existing: bool = typer.Option(False)) -> None:
-    """Generate a default bumper configuration file."""
+    """
+    Generate a default bumper configuration file.
+
+    If the `--ignore_existing` flag is set, any existing `.bumper.toml` file will be overwritten;
+    this action is not reversible. Otherwise, the existing configuration will be preserved.
+    """
     try:
         write_default_config(ignore_existing)
     except ExistingConfigError as e:
