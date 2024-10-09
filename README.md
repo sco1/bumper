@@ -1,5 +1,5 @@
 # bumper
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/0.1.0?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/1.0.0?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI](https://img.shields.io/pypi/v/sco1-bumper?logo=Python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI - License](https://img.shields.io/pypi/l/sco1-bumper?color=magenta)](https://github.com/sco1/bumper/blob/main/LICENSE)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sco1/bumper/main.svg)](https://results.pre-commit.ci/latest/github/sco1/bumper/main)
