@@ -8,6 +8,12 @@ Automatically increment the project's version number.
 
 Heavily inspired by [`bump2version`](https://github.com/c4urself/bump2version) and [`bumpversion`](https://github.com/peritus/bumpversion). While [`bump-my-version`](https://github.com/callowayproject/bump-my-version) is an excellent modern fork this functionality, I'd like a pared down version of the offered feature set for my personal projects.
 
+## Supported Versioning Schemes
+* [Semantic Versioning (SemVer)](https://semver.org/#semantic-versioning-200)
+  * Assumes `<MAJOR>.<MINOR>.<PATCH>`
+* [Calendar Versioning (CalVer)](https://calver.org/)
+  * Assumes `<YYYY>.<0M>.<0D>.<MICRO>`
+
 ## Installation
 Install from PyPi with your favorite `pip` invocation, e.g.:
 
@@ -21,10 +27,10 @@ import cog
 from subprocess import PIPE, run
 out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
-    f"```bash\n$ bumper --help\n{out.stdout.rstrip()}\n```"
+    f"```\n$ bumper --help\n{out.stdout.rstrip()}\n```"
 )
 ]]] -->
-```bash
+```
 $ bumper --help
 Usage: bumper [OPTIONS] COMMAND [ARGS]...
 
@@ -42,7 +48,7 @@ Commands:
 ### Required Fields
 #### `tool.bumper`
 * `current_version` - The current software version. This is automatically incremented when bumping.
-  * **NOTE:** Only SemVer is supported
+* `versioning_type` - Versioning type to be used, accepted values are `"semver"` and `"calver"`
 
 #### `tool.bumper.files`
 * `file` - Path to target file relative to the repository root
@@ -54,6 +60,7 @@ The basic configuration looks something like the following:
 ```toml
 [tool.bumper]
 current_version = "0.1.0"
+versioning_type = "semver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
@@ -65,6 +72,7 @@ Multiple replacements within the same file can also be specified:
 ```toml
 [tool.bumper]
 current_version = "0.1.0"
+versioning_type = "semver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
@@ -88,20 +96,31 @@ import cog
 from subprocess import PIPE, run
 out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
-    f"```bash\n$ bumper bump --help\n{out.stdout.rstrip()}\n```"
+    f"```\n$ bumper bump --help\n{out.stdout.rstrip()}\n```"
 )
 ]]] -->
-```bash
+```
 $ bumper bump --help
-Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch}
+Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
 
   Bump the requested version component.
+
+  Allowable `BUMP_BY` values differ based on the project's specified
+  versioning type:
+      * SemVer - major, minor, patch
+      * CalVer - date
+
+  When using CalVer, if the user's current UTC date is the same as the current
+  project version, then the Micro component is incremented. Otherwise, the
+  date components are bumped to the user's current UTC date and Micro reset to
+  `0`.
 
   If `dry_run` is `True`, the requested diff will be displayed in the terminal
   & no file modifications will take place.
 
 Arguments:
-  BUMP_BY:{major|minor|patch}  [required]
+  BUMP_BY:{major|minor|patch|date}
+                                  [required]
 
 Options:
   --dry-run / --no-dry-run  Preview the requested diff.  [default: no-dry-run]
@@ -119,10 +138,10 @@ import cog
 from subprocess import PIPE, run
 out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
-    f"```bash\n$ bumper init --help\n{out.stdout.rstrip()}\n```"
+    f"```\n$ bumper init --help\n{out.stdout.rstrip()}\n```"
 )
 ]]] -->
-```bash
+```
 $ bumper init --help
 Usage: bumper init [OPTIONS]
 

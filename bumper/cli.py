@@ -31,6 +31,14 @@ def bump_ver_cmd(
     """
     Bump the requested version component.
 
+    Allowable `BUMP_BY` values differ based on the project's specified versioning type:
+        * SemVer - major, minor, patch
+        * CalVer - date
+
+    When using CalVer, if the user's current UTC date is the same as the current project version,
+    then the Micro component is incremented. Otherwise, the date components are bumped to the user's
+    current UTC date and Micro reset to `0`.
+
     If `dry_run` is `True`, the requested diff will be displayed in the terminal & no file
     modifications will take place.
     """
@@ -41,7 +49,7 @@ def bump_ver_cmd(
         raise ConfigNotFoundError("Configuration file could not be located.")
 
     try:
-        current_version, files = parse_config(cfg_path)
+        current_version, versioning_type, files = parse_config(cfg_path)
     except BumperConfigError as e:
         _abort_with_message(str(e))
 

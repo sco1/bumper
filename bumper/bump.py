@@ -10,9 +10,13 @@ from bumper.config import BumperFile
 
 
 class BumpType(StrEnum):  # noqa: D101
+    # SemVer only
     MAJOR = "major"
     MINOR = "minor"
     PATCH = "patch"
+
+    # CalVer only
+    DATE = "date"
 
 
 def _build_new_version(current_version: version.Version, bump_type: BumpType) -> version.Version:

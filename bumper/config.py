@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import tomllib
 import typing as t
+from enum import StrEnum
 from pathlib import Path
 
 from packaging import version
 
-BUMPER_REQUIRED_FIELDS = ("current_version",)
+BUMPER_REQUIRED_FIELDS = ("current_version", "versioning_type")
 REPLACEMENT_REQUIRED_FIELDS = ("file", "search")
 
 
@@ -22,6 +23,11 @@ class BumperFile(t.NamedTuple):  # noqa: D101
         return cls(file=Path(file), search=search)
 
 
+class VersioningType(StrEnum):  # noqa: D101
+    SEMVER = "semver"
+    CALVER = "calver"
+
+
 def _validate_config(cfg: dict) -> None:
     """
     Validate the provided parsed TOML output.
@@ -31,6 +37,7 @@ def _validate_config(cfg: dict) -> None:
     ```toml
     [tool.bumper]
     current_version = "0.1.0"
+    versioning_type = "semver"
 
     [[tool.bumper.files]]
     file = "./pyproject.toml"
@@ -60,7 +67,7 @@ def _validate_config(cfg: dict) -> None:
                 )
 
 
-PARSED_T: t.TypeAlias = tuple[version.Version, list[BumperFile]]
+PARSED_T: t.TypeAlias = tuple[version.Version, VersioningType, list[BumperFile]]
 
 
 def parse_config(cfg_path: Path) -> PARSED_T:
@@ -77,9 +84,10 @@ def parse_config(cfg_path: Path) -> PARSED_T:
 
     _validate_config(loaded)
     current_version = version.parse(loaded["tool"]["bumper"]["current_version"])
+    versioning_type = VersioningType(loaded["tool"]["bumper"]["versioning_type"])
     files = [BumperFile.from_toml(**f) for f in loaded["tool"]["bumper"]["files"]]
 
-    return current_version, files
+    return current_version, versioning_type, files
 
 
 class ExistingConfigError(Exception): ...  # noqa: D101
@@ -88,6 +96,7 @@ class ExistingConfigError(Exception): ...  # noqa: D101
 STARTER_CONFIG = """\
 [tool.bumper]
 current_version = "0.1.0"
+versioning_type = "semver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"

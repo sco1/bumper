@@ -4,7 +4,14 @@ from pathlib import Path
 import pytest
 from packaging import version
 
-from bumper.config import BumperConfigError, BumperFile, PARSED_T, _validate_config, parse_config
+from bumper.config import (
+    BumperConfigError,
+    BumperFile,
+    PARSED_T,
+    VersioningType,
+    _validate_config,
+    parse_config,
+)
 from tests import TEST_DATA_DIR
 
 TOML_NO_TOOLS = """\
@@ -35,6 +42,7 @@ def test_config_validation_no_bumper_raises() -> None:
 TOML_MISSING_BUMPER_INFO = """\
 [tool.bumper]
 hello_world = "hi"
+versioning_type = "semver"
 """
 
 
@@ -47,6 +55,7 @@ def test_config_validation_missing_bumper_info_raises() -> None:
 TOML_MISSING_FILES = """\
 [tool.bumper]
 current_version = "0.1.0"
+versioning_type = "semver"
 """
 
 
@@ -59,6 +68,7 @@ def test_config_validation_no_files_raises() -> None:
 TOML_MISSING_FILE_INFO = """\
 [tool.bumper]
 current_version = "0.1.0"
+versioning_type = "semver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
@@ -76,13 +86,29 @@ def test_nonexistent_config_raises() -> None:
         parse_config(Path("ooga.booga"))
 
 
-TRUTH_SINGLE_REPLACE = (
+TRUTH_SINGLE_REPLACE_SEMVER = (
     version.Version("0.1.0"),
+    VersioningType.SEMVER,
+    [BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"')],
+)
+TRUTH_SINGLE_REPLACE_CALVER = (
+    version.Version("0.1.0"),
+    VersioningType.CALVER,
     [BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"')],
 )
 
-TRUTH_MULTI_REPLACE = (
+TRUTH_MULTI_REPLACE_SEMVER = (
     version.Version("0.1.0"),
+    VersioningType.SEMVER,
+    [
+        BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"'),
+        BumperFile(file=Path("./README.md"), search="sco1-bumper/{current_version}"),
+        BumperFile(file=Path("./README.md"), search="rev: v{current_version}"),
+    ],
+)
+TRUTH_MULTI_REPLACE_CALVER = (
+    version.Version("0.1.0"),
+    VersioningType.CALVER,
     [
         BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"'),
         BumperFile(file=Path("./README.md"), search="sco1-bumper/{current_version}"),
@@ -91,10 +117,12 @@ TRUTH_MULTI_REPLACE = (
 )
 
 CONFIG_PARSER_TEST_CASES = (
-    (TEST_DATA_DIR / "sample_config.toml", TRUTH_SINGLE_REPLACE),
-    (TEST_DATA_DIR / "sample_pyproject.toml", TRUTH_SINGLE_REPLACE),
-    (TEST_DATA_DIR / "sample_config_multi_replace.toml", TRUTH_MULTI_REPLACE),
-    (TEST_DATA_DIR / "sample_pyproject_multi_replace.toml", TRUTH_MULTI_REPLACE),
+    (TEST_DATA_DIR / "sample_config.toml", TRUTH_SINGLE_REPLACE_SEMVER),
+    (TEST_DATA_DIR / "sample_pyproject.toml", TRUTH_SINGLE_REPLACE_SEMVER),
+    (TEST_DATA_DIR / "sample_config_multi_replace.toml", TRUTH_MULTI_REPLACE_SEMVER),
+    (TEST_DATA_DIR / "sample_pyproject_multi_replace.toml", TRUTH_MULTI_REPLACE_SEMVER),
+    (TEST_DATA_DIR / "sample_config_calver.toml", TRUTH_SINGLE_REPLACE_CALVER),
+    (TEST_DATA_DIR / "sample_pyproject_calver.toml", TRUTH_SINGLE_REPLACE_CALVER),
 )
 
 

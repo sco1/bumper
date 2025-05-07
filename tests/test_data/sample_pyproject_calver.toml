@@ -5,7 +5,7 @@ description = "Automatically increment the project's version number."
 
 [tool.bumper]
 current_version = "0.1.0"
-versioning_type = "semver"
+versioning_type = "calver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
