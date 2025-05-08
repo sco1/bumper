@@ -12,7 +12,7 @@ Heavily inspired by [`bump2version`](https://github.com/c4urself/bump2version) a
 * [Semantic Versioning (SemVer)](https://semver.org/#semantic-versioning-200)
   * Assumes `<MAJOR>.<MINOR>.<PATCH>`
 * [Calendar Versioning (CalVer)](https://calver.org/)
-  * Assumes `<YYYY>.<0M>.<0D>.<MICRO>`
+  * Assumes `<YYYY>.<0M>.<MICRO>`
 
 ## Installation
 Install from PyPi with your favorite `pip` invocation, e.g.:
@@ -57,10 +57,22 @@ Commands:
 ### Example Configuration
 The basic configuration looks something like the following:
 
+#### SemVer
 ```toml
 [tool.bumper]
 current_version = "0.1.0"
 versioning_type = "semver"
+
+[[tool.bumper.files]]
+file = "./pyproject.toml"
+search = 'version = "{current_version}"'
+```
+
+#### CalVer
+```toml
+[tool.bumper]
+current_version = "2025.01.0"
+versioning_type = "calver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
@@ -106,14 +118,12 @@ Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
   Bump the requested version component.
 
   Allowable `BUMP_BY` values differ based on the project's specified
-  versioning type:
-      * SemVer - major, minor, patch
-      * CalVer - date
+  versioning type: SemVer - (major, minor, patch), CalVer - (date)
 
-  When using CalVer, if the user's current UTC date is the same as the current
-  project version, then the Micro component is incremented. Otherwise, the
-  date components are bumped to the user's current UTC date and Micro reset to
-  `0`.
+  When using CalVer, if the user's current UTC month is the same as the
+  current project version, then the Micro component is incremented. Otherwise,
+  the date components are bumped to the user's current UTC month and Micro
+  reset to `0`.
 
   If `dry_run` is `True`, the requested diff will be displayed in the terminal
   & no file modifications will take place.
@@ -131,7 +141,7 @@ Options:
 ### `bumper init`
 A small helper to initialize a starter `.bumper.toml` file that bumps the `version` field of your project's `pyproject.toml` file.
 
-**NOTE:** This starter file is initialized at version `0.1.0`, so be sure to update this value with your current version number before using bumper.
+**NOTE:** Be sure to update the sample version with your current version number before bumping with bumper.
 
 <!-- [[[cog
 import cog
@@ -152,6 +162,8 @@ Usage: bumper init [OPTIONS]
   configuration will be preserved.
 
 Options:
+  --versioning-type [semver|calver]
+                                  [default: semver]
   --ignore-existing / --no-ignore-existing
                                   [default: no-ignore-existing]
   --help                          Show this message and exit.

@@ -93,7 +93,7 @@ def parse_config(cfg_path: Path) -> PARSED_T:
 class ExistingConfigError(Exception): ...  # noqa: D101
 
 
-STARTER_CONFIG = """\
+STARTER_CONFIG_SEMVER = """\
 [tool.bumper]
 current_version = "0.1.0"
 versioning_type = "semver"
@@ -102,10 +102,25 @@ versioning_type = "semver"
 file = "./pyproject.toml"
 search = 'version = "{current_version}"'
 """
+
+STARTER_CONFIG_CALVER = """\
+[tool.bumper]
+current_version = "2025.01.0"
+versioning_type = "calver"
+
+[[tool.bumper.files]]
+file = "./pyproject.toml"
+search = 'version = "{current_version}"'
+"""
+
 CD = Path()
 
 
-def write_default_config(ignore_existing: bool = False, root_dir: Path = CD) -> None:
+def write_default_config(
+    versioning_type: VersioningType = VersioningType.SEMVER,
+    ignore_existing: bool = False,
+    root_dir: Path = CD,
+) -> None:
     """
     Write a starter `.bumper.toml` configuration to the specified root directory.
 
@@ -117,4 +132,9 @@ def write_default_config(ignore_existing: bool = False, root_dir: Path = CD) -> 
         if cfg_path.exists():
             raise ExistingConfigError(f"Configuration file already exists: '{cfg_path.name}'")
 
-    cfg_path.write_text(STARTER_CONFIG)
+    if versioning_type == VersioningType.SEMVER:
+        cfg = STARTER_CONFIG_SEMVER
+    elif versioning_type == VersioningType.CALVER:  # pragma: no branch
+        cfg = STARTER_CONFIG_CALVER
+
+    cfg_path.write_text(cfg)
