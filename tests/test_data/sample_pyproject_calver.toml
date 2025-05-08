@@ -1,11 +1,11 @@
 [project]
 name = "sco1-bumper"
-version = "0.1.0"
+version = "2025.01.0"
 description = "Automatically increment the project's version number."
 
 [tool.bumper]
-current_version = "0.1.0"
-versioning_type = "semver"
+current_version = "2025.01.0"
+versioning_type = "calver"
 
 [[tool.bumper.files]]
 file = "./pyproject.toml"
