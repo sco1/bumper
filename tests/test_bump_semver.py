@@ -5,6 +5,7 @@ from packaging.version import Version
 
 from bumper.bump import BumpType, _build_new_version, _merge_bumpers, bump_ver
 from bumper.config import BumperFile
+from tests.conftest import SAMPLE_PYPROJECT, SAMPLE_README
 
 VERSION_BUILD_TEST_CASES = (
     (Version("0.0.1"), BumpType.MAJOR, Version("1.0.0")),
@@ -42,21 +43,6 @@ def test_merge_bumpers() -> None:
     assert _merge_bumpers(files) == truth_out
 
 
-SAMPLE_README = """\
-# bumper
-[![PyPI - Python Version](https://some.url/sco1-bumper/0.1.0?logo=python)]
-
-Automatically increment the project's version number.
-
-```yaml
-repos:
--   repo: https://github.com/sco1/brie-commit
-    rev: v0.1.0
-    hooks:
-    -   id: brie-commit
-```
-"""
-
 TRUTH_BUMPED_README = """\
 # bumper
 [![PyPI - Python Version](https://some.url/sco1-bumper/0.2.0?logo=python)]
@@ -72,17 +58,6 @@ repos:
 ```
 """
 
-SAMPLE_PYPROJECT = """\
-[project]
-name = "sco1-bumper"
-version = "0.1.0"
-description = "Automatically increment the project's version number."
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-"""
-
 TRUTH_BUMPED_PYPROJECT = """\
 [project]
 name = "sco1-bumper"
@@ -93,14 +68,6 @@ description = "Automatically increment the project's version number."
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 """
-
-
-@pytest.fixture
-def dummy_repo(tmp_path: Path) -> Path:
-    (tmp_path / "README.md").write_text(SAMPLE_README)
-    (tmp_path / "pyproject.toml").write_text(SAMPLE_PYPROJECT)
-
-    return tmp_path
 
 
 def test_bump_ver_single_replace(dummy_repo: Path) -> None:

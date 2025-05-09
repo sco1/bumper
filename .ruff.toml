@@ -55,6 +55,10 @@ ignore = [
     "D101",
     "D103",
 ]
+"tests/conftest.py" = [
+    "D101",
+    "D103",
+]
 
 [lint.flake8-bugbear]
 extend-immutable-calls = [

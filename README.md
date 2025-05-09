@@ -71,7 +71,7 @@ search = 'version = "{current_version}"'
 #### CalVer
 ```toml
 [tool.bumper]
-current_version = "2025.01.0"
+current_version = "2025.1.0"
 versioning_type = "calver"
 
 [[tool.bumper.files]]

@@ -85,6 +85,10 @@ def bump_ver(
                 r.replace("{current_version}", str(next_version)),
             )
 
+        if new == old:
+            print(f"{target_file.name} - No changes.")
+            continue
+
         if dry_run:
             diff = difflib.unified_diff(
                 old.splitlines(), new.splitlines(), fromfile=target_file.name, n=0, lineterm=""
@@ -93,3 +97,4 @@ def bump_ver(
             print("\n".join(line.rstrip() for line in diff))
         else:
             target_file.write_text(new)
+            print(f"Bumped {target_file.name}")

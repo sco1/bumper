@@ -8,7 +8,7 @@ from bumper.bump import BumpType, _build_new_version
 
 CALVER_TEST_CASES = (
     (Version("2025.1.0"), dt.date(year=2025, month=1, day=1), Version("2025.1.1")),
-    (Version("2025.01"), dt.date(year=2025, month=1, day=1), Version("2025.1.1")),
+    (Version("2025.1"), dt.date(year=2025, month=1, day=1), Version("2025.1.1")),
     (Version("2025.10.0"), dt.date(year=2025, month=10, day=1), Version("2025.10.1")),
     (Version("2025.10"), dt.date(year=2025, month=10, day=1), Version("2025.10.1")),
     (Version("2025.1.0"), dt.date(year=2025, month=2, day=1), Version("2025.2.0")),
