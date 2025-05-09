@@ -38,7 +38,7 @@ def test_write_default_config_existing_config_no_ignore_raises(tmp_path: Path) -
 
 STARTER_CONFIG_CALVER = """\
 [tool.bumper]
-current_version = "2025.01.0"
+current_version = "2025.1.0"
 versioning_type = "calver"
 
 [[tool.bumper.files]]

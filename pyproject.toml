@@ -1,6 +1,6 @@
 [project]
 name = "sco1-bumper"
-version = "2.0.0"
+version = "2.0.1"
 description = "Automatically increment the project's version number."
 license = "MIT"
 license-files = ["LICENSE"]
