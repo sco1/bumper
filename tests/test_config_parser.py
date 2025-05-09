@@ -92,7 +92,7 @@ TRUTH_SINGLE_REPLACE_SEMVER = (
     [BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"')],
 )
 TRUTH_SINGLE_REPLACE_CALVER = (
-    version.Version("2025.01.0"),
+    version.Version("2025.1.0"),
     VersioningType.CALVER,
     [BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"')],
 )
@@ -107,7 +107,7 @@ TRUTH_MULTI_REPLACE_SEMVER = (
     ],
 )
 TRUTH_MULTI_REPLACE_CALVER = (
-    version.Version("2025.01.0"),
+    version.Version("2025.1.0"),
     VersioningType.CALVER,
     [
         BumperFile(file=Path("./pyproject.toml"), search='version = "{current_version}"'),

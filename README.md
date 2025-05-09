@@ -1,5 +1,5 @@
 # bumper
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.0.0?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.0.1?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI](https://img.shields.io/pypi/v/sco1-bumper?logo=Python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI - License](https://img.shields.io/pypi/l/sco1-bumper?color=magenta)](https://github.com/sco1/bumper/blob/main/LICENSE)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sco1/bumper/main.svg)](https://results.pre-commit.ci/latest/github/sco1/bumper/main)
@@ -12,7 +12,7 @@ Heavily inspired by [`bump2version`](https://github.com/c4urself/bump2version) a
 * [Semantic Versioning (SemVer)](https://semver.org/#semantic-versioning-200)
   * Assumes `<MAJOR>.<MINOR>.<PATCH>`
 * [Calendar Versioning (CalVer)](https://calver.org/)
-  * Assumes `<YYYY>.<0M>.<MICRO>`
+  * Assumes `<YYYY>.<MM>.<MICRO>`
 
 ## Installation
 Install from PyPi with your favorite `pip` invocation, e.g.:
@@ -71,7 +71,7 @@ search = 'version = "{current_version}"'
 #### CalVer
 ```toml
 [tool.bumper]
-current_version = "2025.01.0"
+current_version = "2025.1.0"
 versioning_type = "calver"
 
 [[tool.bumper.files]]
