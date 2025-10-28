@@ -82,6 +82,7 @@ def test_bump_ver_single_replace(dummy_repo: Path) -> None:
 
 
 TRUTH_SINGLE_DIFF = """\
+Bumper bumping: v0.1.0 -> v0.2.0
 --- pyproject.toml
 +++
 @@ -3 +3 @@
@@ -120,6 +121,7 @@ def test_bump_ver_multi_replace(dummy_repo: Path) -> None:
 
 
 TRUTH_MULTI_DIFF = """\
+Bumper bumping: v0.1.0 -> v0.2.0
 --- pyproject.toml
 +++
 @@ -3 +3 @@
