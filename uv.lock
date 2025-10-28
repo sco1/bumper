@@ -556,7 +556,7 @@ wheels = [
 
 [[package]]
 name = "sco1-bumper"
-version = "2.0.1"
+version = "2.0.2"
 source = { editable = "." }
 dependencies = [
     { name = "packaging" },

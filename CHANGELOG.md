@@ -1,6 +1,10 @@
 # Changelog
 Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (`<major>`.`<minor>`.`<patch>`)
 
+## [v2.0.2]
+### Changed
+* #14 Show version bump information in CLI output
+
 ## [v2.0.1]
 ### Changed
 * #9 Change expected CalVer format to `<YYYY>.<MM>.<MICRO>`
