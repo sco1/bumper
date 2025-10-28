@@ -75,6 +75,7 @@ def bump_ver(
     next_version = _build_new_version(current_version, bump_type)
     file_operations = _merge_bumpers(files)  # Merge so we handle each file all at once
 
+    print(f"Bumper bumping: v{current_version} -> v{next_version}")
     for target_file, rules in file_operations.items():
         old = target_file.read_text()
         new = copy.copy(old)
