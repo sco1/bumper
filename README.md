@@ -25,7 +25,7 @@ You can confirm proper installation via the `bumper` CLI:
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper --help\n{out.stdout.rstrip()}\n```"
 )
@@ -106,7 +106,7 @@ Bump your project's version number using your defined configuration.
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper bump --help\n{out.stdout.rstrip()}\n```"
 )
@@ -146,7 +146,7 @@ A small helper to initialize a starter `.bumper.toml` file that bumps the `versi
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper init --help\n{out.stdout.rstrip()}\n```"
 )
