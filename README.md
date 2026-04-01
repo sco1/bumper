@@ -1,5 +1,5 @@
 # bumper
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.0.2?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.0.3?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI](https://img.shields.io/pypi/v/sco1-bumper?logo=Python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI - License](https://img.shields.io/pypi/l/sco1-bumper?color=magenta)](https://github.com/sco1/bumper/blob/main/LICENSE)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sco1/bumper/main.svg)](https://results.pre-commit.ci/latest/github/sco1/bumper/main)
@@ -25,7 +25,7 @@ You can confirm proper installation via the `bumper` CLI:
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper --help\n{out.stdout.rstrip()}\n```"
 )
@@ -106,7 +106,7 @@ Bump your project's version number using your defined configuration.
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper bump --help\n{out.stdout.rstrip()}\n```"
 )
@@ -146,7 +146,7 @@ A small helper to initialize a starter `.bumper.toml` file that bumps the `versi
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii")
+out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
 cog.out(
     f"```\n$ bumper init --help\n{out.stdout.rstrip()}\n```"
 )
