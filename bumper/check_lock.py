@@ -3,7 +3,7 @@ import typing as t
 from pathlib import Path
 
 
-class ProjectMetadata(t.NamedTuple):
+class ProjectMetadata(t.NamedTuple):  # noqa: D101
     name: str
     ver: str
 

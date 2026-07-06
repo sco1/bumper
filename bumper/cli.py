@@ -68,8 +68,13 @@ def bump_ver_cmd(
     bump_ver(current_version=current_version, files=files, bump_type=bump_by, dry_run=dry_run)
 
     if check_lock:
-        if not is_local_locked():
-            print("NOTE: Locked version mismatch for local project, run 'uv lock -U' to update.")
+        try:
+            if not is_local_locked():
+                print(
+                    "NOTE: Locked version mismatch for local project, run 'uv lock -U' to update."
+                )
+        except ValueError:
+            print("Could not locate 'uv.lock' and/or 'pyproject.toml', skipping lock check.")
 
 
 @bumper_cli.command()
