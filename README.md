@@ -1,5 +1,5 @@
 # bumper
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.0.3?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sco1-bumper/2.1.0?logo=python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI](https://img.shields.io/pypi/v/sco1-bumper?logo=Python&logoColor=FFD43B)](https://pypi.org/project/sco1-bumper/)
 [![PyPI - License](https://img.shields.io/pypi/l/sco1-bumper?color=magenta)](https://github.com/sco1/bumper/blob/main/LICENSE)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sco1/bumper/main.svg)](https://results.pre-commit.ci/latest/github/sco1/bumper/main)
@@ -103,6 +103,8 @@ search = "rev: v{current_version}"
 ### `bumper bump`
 Bump your project's version number using your defined configuration.
 
+NOTE: The `check_lock` option will be skipped if `pyproject.toml` and/or `uv.lock` are not defined.
+
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
@@ -128,13 +130,19 @@ Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
   If `dry_run` is `True`, the requested diff will be displayed in the terminal
   & no file modifications will take place.
 
+  If `check_lock` is `True`, a helper message is displayed if there is a
+  mismatch between the bumped version and the version locked by `uv.lock`.
+
 Arguments:
   BUMP_BY:{major|minor|patch|date}
                                   [required]
 
 Options:
-  --dry-run / --no-dry-run  Preview the requested diff.  [default: no-dry-run]
-  --help                    Show this message and exit.
+  --dry-run / --no-dry-run        Preview the requested diff.  [default: no-
+                                  dry-run]
+  --check-lock / --no-check-lock  Check that locked version matches the bumped
+                                  ver.  [default: check-lock]
+  --help                          Show this message and exit.
 ```
 <!-- [[[end]]] -->
 

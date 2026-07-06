@@ -4,6 +4,7 @@ import typer
 
 from bumper import CONFIG_PRIORITY
 from bumper.bump import BumpType, bump_ver
+from bumper.check_lock import is_local_locked
 from bumper.config import (
     BumperConfigError,
     BumperFile,
@@ -25,6 +26,7 @@ def _abort_with_message(message: str, end: str = "\n") -> t.Never:
 def bump_ver_cmd(
     bump_by: BumpType,
     dry_run: bool = typer.Option(False, help="Preview the requested diff."),
+    check_lock: bool = typer.Option(True, help="Check that locked version matches the bumped ver."),
 ) -> None:
     """
     Bump the requested version component.
@@ -38,6 +40,9 @@ def bump_ver_cmd(
 
     If `dry_run` is `True`, the requested diff will be displayed in the terminal & no file
     modifications will take place.
+
+    If `check_lock` is `True`, a helper message is displayed if there is a mismatch between the
+    bumped version and the version locked by `uv.lock`.
     """
     for cfg_path in CONFIG_PRIORITY:
         if cfg_path.exists():
@@ -61,6 +66,15 @@ def bump_ver_cmd(
     # Add in the bump configuration so it gets updated as well
     files.append(BumperFile(file=cfg_path, search='current_version = "{current_version}"'))
     bump_ver(current_version=current_version, files=files, bump_type=bump_by, dry_run=dry_run)
+
+    if check_lock:
+        try:
+            if not is_local_locked():
+                print(
+                    "NOTE: Locked version mismatch for local project, run 'uv lock -U' to update."
+                )
+        except ValueError:
+            print("Could not locate 'uv.lock' and/or 'pyproject.toml', skipping lock check.")
 
 
 @bumper_cli.command()
