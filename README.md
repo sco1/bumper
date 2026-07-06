@@ -128,13 +128,19 @@ Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
   If `dry_run` is `True`, the requested diff will be displayed in the terminal
   & no file modifications will take place.
 
+  If `check_lock` is `True`, a helper message is displayed if there is a
+  mismatch between the bumped version and the version locked by `uv.lock`.
+
 Arguments:
   BUMP_BY:{major|minor|patch|date}
                                   [required]
 
 Options:
-  --dry-run / --no-dry-run  Preview the requested diff.  [default: no-dry-run]
-  --help                    Show this message and exit.
+  --dry-run / --no-dry-run        Preview the requested diff.  [default: no-
+                                  dry-run]
+  --check-lock / --no-check-lock  Check that locked version matches the bumped
+                                  ver.  [default: check-lock]
+  --help                          Show this message and exit.
 ```
 <!-- [[[end]]] -->
 

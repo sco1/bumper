@@ -14,7 +14,7 @@ def _get_project_info(pyproject: Path) -> ProjectMetadata:
 
     metadata = pyproject_data.get("project")
     if metadata is None:
-        raise ValueError("`project` table could not be located.")
+        raise ValueError("'project' table could not be located.")
 
     project_name = metadata.get("name")
     project_ver = metadata.get("version")
