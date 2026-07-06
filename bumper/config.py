@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import datetime as dt
 import tomllib
 import typing as t
 from enum import StrEnum
 from pathlib import Path
+from textwrap import dedent
 
 from packaging import version
 
@@ -103,15 +105,23 @@ file = "./pyproject.toml"
 search = 'version = "{current_version}"'
 """
 
-STARTER_CONFIG_CALVER = """\
-[tool.bumper]
-current_version = "2025.1.0"
-versioning_type = "calver"
 
-[[tool.bumper.files]]
-file = "./pyproject.toml"
-search = 'version = "{current_version}"'
-"""
+def _build_calver_starter() -> str:
+    """Generate a date-aware starter config for CalVer."""
+    utc_now = dt.datetime.now(tz=dt.timezone.utc).date()
+
+    calver_starter = dedent(f"""\
+    [tool.bumper]
+    current_version = "{utc_now.year}.{utc_now.month}.0"
+    versioning_type = "calver"
+
+    [[tool.bumper.files]]
+    file = "./pyproject.toml"
+    search = 'version = "{{current_version}}"'
+    """)
+
+    return calver_starter
+
 
 CD = Path()
 
@@ -135,6 +145,6 @@ def write_default_config(
     if versioning_type == VersioningType.SEMVER:
         cfg = STARTER_CONFIG_SEMVER
     elif versioning_type == VersioningType.CALVER:  # pragma: no branch
-        cfg = STARTER_CONFIG_CALVER
+        cfg = _build_calver_starter()
 
     cfg_path.write_text(cfg)

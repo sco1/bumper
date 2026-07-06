@@ -1,6 +1,8 @@
+import datetime as dt
 from pathlib import Path
 
 import pytest
+import time_machine
 
 from bumper.config import ExistingConfigError, VersioningType, write_default_config
 
@@ -36,7 +38,7 @@ def test_write_default_config_existing_config_no_ignore_raises(tmp_path: Path) -
         write_default_config(ignore_existing=False, root_dir=tmp_path)
 
 
-STARTER_CONFIG_CALVER = """\
+TRUTH_STARTER_CONFIG_CALVER = """\
 [tool.bumper]
 current_version = "2025.1.0"
 versioning_type = "calver"
@@ -47,8 +49,9 @@ search = 'version = "{current_version}"'
 """
 
 
+@time_machine.travel(dt.date(2025, 1, 1), tick=False)
 def test_write_default_config_calver(tmp_path: Path) -> None:
     write_default_config(versioning_type=VersioningType.CALVER, root_dir=tmp_path)
 
     cfg_path = tmp_path / ".bumper.toml"
-    assert cfg_path.read_text() == STARTER_CONFIG_CALVER
+    assert cfg_path.read_text() == TRUTH_STARTER_CONFIG_CALVER
