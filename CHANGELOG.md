@@ -1,6 +1,13 @@
 # Changelog
 Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (`<major>`.`<minor>`.`<patch>`)
 
+## [v2.1.0]
+### Added
+* #16 Add helper check to `bump` command for mismatch between bumped project version & locked local project version
+
+### Changed
+* Calver starter config now uses the current UTC date rather than a static date
+
 ## [v2.0.3]
 ### Changed
 * (Internal) Replace deprecated `typer-slim` dependency with `typer`
