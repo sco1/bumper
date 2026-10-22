@@ -115,7 +115,7 @@ cog.out(
 ]]] -->
 ```
 $ bumper bump --help
-Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
+Usage: bumper bump [OPTIONS] {bump_by}:<major|minor|patch|date>
 
   Bump the requested version component.
 
@@ -134,7 +134,7 @@ Usage: bumper bump [OPTIONS] BUMP_BY:{major|minor|patch|date}
   mismatch between the bumped version and the version locked by `uv.lock`.
 
 Arguments:
-  BUMP_BY:{major|minor|patch|date}
+  bump_by:<major|minor|patch|date>
                                   [required]
 
 Options:
@@ -170,7 +170,7 @@ Usage: bumper init [OPTIONS]
   configuration will be preserved.
 
 Options:
-  --versioning-type [semver|calver]
+  --versioning-type <semver|calver>
                                   [default: semver]
   --ignore-existing / --no-ignore-existing
                                   [default: no-ignore-existing]

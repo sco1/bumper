@@ -73,8 +73,8 @@ def bump_ver_cmd(
                 print(
                     "NOTE: Locked version mismatch for local project, run 'uv lock -U' to update."
                 )
-        except ValueError:
-            print("Could not locate 'uv.lock' and/or 'pyproject.toml', skipping lock check.")
+        except ValueError as e:
+            print(str(e))
 
 
 @bumper_cli.command()
@@ -85,7 +85,7 @@ def init(
     """
     Generate a default bumper configuration file.
 
-    If the `--ignore_existing` flag is set, any existing `.bumper.toml` file will be overwritten;
+    If the `--ignore-existing` flag is set, any existing `.bumper.toml` file will be overwritten;
     this action is not reversible. Otherwise, the existing configuration will be preserved.
     """
     try:
