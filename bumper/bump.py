@@ -77,7 +77,10 @@ def bump_ver(
 
     print(f"Bumper bumping: v{current_version} -> v{next_version}")
     for target_file, rules in file_operations.items():
-        old = target_file.read_text()
+        # Disable newline translation to retain platform-specific line endings
+        # Can move to pathlib with 3.13+
+        with target_file.open(encoding="utf-8", newline="") as f:
+            old = f.read()
         new = copy.copy(old)
 
         for r in rules:
@@ -97,5 +100,5 @@ def bump_ver(
             # Strip trailing whitespace to make testing easier
             print("\n".join(line.rstrip() for line in diff))
         else:
-            target_file.write_text(new)
+            target_file.write_text(new, encoding="utf-8", newline="")
             print(f"Bumped {target_file.name}")

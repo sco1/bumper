@@ -70,9 +70,7 @@ def bump_ver_cmd(
     if check_lock:
         try:
             if not is_local_locked():
-                print(
-                    "NOTE: Locked version mismatch for local project, run 'uv lock -U' to update."
-                )
+                print("NOTE: Locked version mismatch for local project, run 'uv lock' to update.")
         except ValueError as e:
             print(str(e))
 

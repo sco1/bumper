@@ -147,4 +147,4 @@ def write_default_config(
     elif versioning_type == VersioningType.CALVER:  # pragma: no branch
         cfg = _build_calver_starter()
 
-    cfg_path.write_text(cfg)
+    cfg_path.write_text(cfg, encoding="utf-8")

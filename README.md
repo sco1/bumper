@@ -25,7 +25,7 @@ You can confirm proper installation via the `bumper` CLI:
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
+out = run(["bumper", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
     f"```\n$ bumper --help\n{out.stdout.rstrip()}\n```"
 )
@@ -108,14 +108,14 @@ NOTE: The `check_lock` option will be skipped if `pyproject.toml` and/or `uv.loc
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
+out = run(["bumper", "bump", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
     f"```\n$ bumper bump --help\n{out.stdout.rstrip()}\n```"
 )
 ]]] -->
 ```
 $ bumper bump --help
-Usage: bumper bump [OPTIONS] {bump_by}:<major|minor|patch|date>
+Usage: bumper bump [OPTIONS] {bump_by}
 
   Bump the requested version component.
 
@@ -134,7 +134,7 @@ Usage: bumper bump [OPTIONS] {bump_by}:<major|minor|patch|date>
   mismatch between the bumped version and the version locked by `uv.lock`.
 
 Arguments:
-  bump_by:<major|minor|patch|date>
+  bump_by <major|minor|patch|date>
                                   [required]
 
 Options:
@@ -154,7 +154,7 @@ A small helper to initialize a starter `.bumper.toml` file that bumps the `versi
 <!-- [[[cog
 import cog
 from subprocess import PIPE, run
-out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii", env={"TYPER_USE_RICH": "0"})
+out = run(["bumper", "init", "--help"], stdout=PIPE, encoding="ascii")
 cog.out(
     f"```\n$ bumper init --help\n{out.stdout.rstrip()}\n```"
 )
@@ -165,7 +165,7 @@ Usage: bumper init [OPTIONS]
 
   Generate a default bumper configuration file.
 
-  If the `--ignore_existing` flag is set, any existing `.bumper.toml` file
+  If the `--ignore-existing` flag is set, any existing `.bumper.toml` file
   will be overwritten; this action is not reversible. Otherwise, the existing
   configuration will be preserved.
 

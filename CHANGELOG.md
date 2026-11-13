@@ -1,6 +1,11 @@
 # Changelog
 Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (`<major>`.`<minor>`.`<patch>`)
 
+## [v2.2.0]
+### Changed
+* Retain existing line endings rather than renormalizing to the platform
+* Force reading of config and src files as UTF-8
+
 ## [v2.1.0]
 ### Added
 * #16 Add helper check to `bump` command for mismatch between bumped project version & locked local project version
