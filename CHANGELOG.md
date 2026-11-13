@@ -6,6 +6,9 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (`<ma
 * Retain existing line endings rather than renormalizing to the platform
 * Force reading of config and src files as UTF-8
 
+### Fixed
+* Locked local project version check now uses canonicalized name to match
+
 ## [v2.1.0]
 ### Added
 * #16 Add helper check to `bump` command for mismatch between bumped project version & locked local project version

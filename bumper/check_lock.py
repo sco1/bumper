@@ -2,6 +2,8 @@ import tomllib
 import typing as t
 from pathlib import Path
 
+from packaging.utils import canonicalize_name
+
 
 class ProjectMetadata(t.NamedTuple):  # noqa: D101
     name: str
@@ -28,16 +30,21 @@ def _get_project_info(pyproject: Path) -> ProjectMetadata:
 
 
 def _get_project_lock_info(lockfile: Path, project_name: str) -> str:
+    # uv normalizes the project names for the lockfile, so we need to use that to match
+    normalized_name = canonicalize_name(project_name)
+
     with lockfile.open("rb") as f:
         lockfile_data = tomllib.load(f)
 
     for p in lockfile_data["package"]:
         # I'm not sure if there's a possibility for our own project to be mentioned twice, for now
         # assume not
-        if p["name"] == project_name:
+        if p["name"] == normalized_name:
             return p["version"]  # type: ignore[no-any-return]
     else:
-        raise ValueError(f"Could not locate project '{project_name}' in lockfile.")
+        raise ValueError(
+            f"Could not locate project '{project_name} ({normalized_name})' in lockfile."
+        )
 
 
 def is_local_locked(
