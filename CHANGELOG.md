@@ -1,7 +1,7 @@
 # Changelog
 Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (`<major>`.`<minor>`.`<patch>`)
 
-## [v2.2.0]
+## [v2.1.1]
 ### Changed
 * Retain existing line endings rather than renormalizing to the platform
 * Force reading of config and src files as UTF-8
