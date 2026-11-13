@@ -154,4 +154,46 @@ def test_is_local_locked(tmp_path: Path) -> None:
     lf = tmp_path / "uv.lock"
     lf.write_text(SAMPLE_LOCK)
 
-    assert is_local_locked()
+    assert is_local_locked(pyproject=pp, lockfile=lf)
+
+
+NON_NORMALIZED_NAMES = (
+    "Sco1-Bumper",
+    "sco1_bumper",
+    "sco1.bumper",
+    "SCO1__bumper",
+    "sco1-_.bumper",
+)
+
+
+@pytest.mark.parametrize("project_name", NON_NORMALIZED_NAMES)
+def test_get_project_lock_info_normalizes_name(tmp_path: Path, project_name: str) -> None:
+    lf = tmp_path / "uv.lock"
+    lf.write_text(SAMPLE_LOCK)
+
+    assert _get_project_lock_info(lf, project_name) == "2.0.3"
+
+
+def test_get_project_lock_info_no_local_raises_shows_names(tmp_path: Path) -> None:
+    lf = tmp_path / "uv.lock"
+    lf.write_text(SAMPLE_LOCK_NO_LOCAL)
+
+    with pytest.raises(ValueError, match=r"'Sco1_Bumper \(sco1-bumper\)'"):
+        _get_project_lock_info(lf, "Sco1_Bumper")
+
+
+SAMPLE_PYPROJECT_NON_NORMALIZED = """\
+[project]
+name = "Sco1_Bumper"
+version = "2.0.3"
+"""
+
+
+def test_is_local_locked_non_normalized_name(tmp_path: Path) -> None:
+    pp = tmp_path / "pyproject.toml"
+    pp.write_text(SAMPLE_PYPROJECT_NON_NORMALIZED)
+
+    lf = tmp_path / "uv.lock"
+    lf.write_text(SAMPLE_LOCK)
+
+    assert is_local_locked(pyproject=pp, lockfile=lf)
